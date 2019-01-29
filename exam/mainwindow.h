@@ -2,6 +2,11 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <sys/socket.h>
+#include <stdlib.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <unistd.h>
 
 namespace Ui {
 class MainWindow;
@@ -16,10 +21,22 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_horizontalSlider_valueChanged(int value);
+
+    void on_SetIp_released();
+
+    void on_Capture_released();
+
+    void on_TurnLeft_released();
+
+    void on_TurnRight_released();
 
 private:
     Ui::MainWindow *ui;
+    int sockServo;
+    struct sockaddr_in serv_addrServo;
+    int sockCamera;
+    struct sockaddr_in serv_addrCamera;
+    char buffCamera[1024];
 };
 
 #endif // MAINWINDOW_H

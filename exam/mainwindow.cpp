@@ -32,9 +32,43 @@ MainWindow::~MainWindow()
     closefd(sockCamera);
 }
 
+void MainWindow::on_Capture_released()
+{
+
+    if (sockCamera>=0) {
+        send(sockCamera, "1", 1, 0);
+        read(sockCamera, buffCamera, 1024);
+//        fprintf(stderr, buffCamera);
+    }
+    else {
+        printf("\n Veuillez renseigner l'adresse ip ! \n");
+    }
+
+}
+
+void MainWindow::on_TurnLeft_released()
+{
+    if (sockServo>=0) {
+        send(sockServo, "0", 1, 0);
+    }
+    else {
+        printf("\n Veuillez renseigner une bonne adresse ip ! \n");
+    }
+}
+
+void MainWindow::on_TurnRight_released()
+{
+    if (sockServo>=0) {
+        send(sockServo, "1", 1, 0);
+    }
+    else {
+        printf("\n Veuillez renseigner une bonne adresse ip ! \n");
+    }
+}
 
 void MainWindow::on_SetIp_released()
 {
+
     QString ipQString = ui->IP->text();
     QByteArray ipQByte = ipQString.toLocal8Bit();
     char * ip = ipQByte.data(); //IP of the raspberry
@@ -56,16 +90,16 @@ void MainWindow::on_SetIp_released()
     // Convert IPv4 and IPv6 addresses from text to binary form
     if(inet_pton(AF_INET, ip, &serv_addrServo.sin_addr)<=0)
     {
-        printf("\nInvalid address/ Address not supported \n");
+        fprintf(stderr,"\nInvalid address/ Address not supported \n");
+    } else {
+        connectfd(sockServo, (SA *)&serv_addrServo, sizeof(serv_addrServo));
     }
-    connectfd(sockServo, (SA *)&serv_addrServo, sizeof(serv_addrServo));
 
     // !!!!!! Création socket Camera !!!!!!!
     if ((sockCamera = socket(AF_INET, SOCK_STREAM, 0)) < 0)
     {
-        printf("\n Socket creation error \n");
+        fprintf(stderr, "\n Socket creation error \n");
     }
-
     memset(&serv_addrCamera, '0', sizeof(serv_addrCamera));
 
     serv_addrCamera.sin_family = AF_INET;
@@ -74,44 +108,8 @@ void MainWindow::on_SetIp_released()
     // Convert IPv4 and IPv6 addresses from text to binary form
     if(inet_pton(AF_INET, ip, &serv_addrCamera.sin_addr)<=0)
     {
-        printf("\nInvalid address/ Address not supported \n");
-    }
-    connectfd(sockCamera, (SA *)&serv_addrCamera, sizeof(serv_addrCamera));
-}
-
-void MainWindow::on_Capture_released()
-{
-
-    if (sockCamera>=0) {
-        send(sockCamera, "1", 1, 0);
-        read(sockCamera, buffCamera, 1024);
-        fprintf(stderr, buffCamera);
-    }
-    else {
-        printf("\n Veuillez renseigner l'adresse ip ! \n");
-    }
-
-
-
-
-}
-
-void MainWindow::on_TurnLeft_released()
-{
-    if (sockServo>=0) {
-        send(sockServo, "0", 1, 0);
-    }
-    else {
-        printf("\n Veuillez renseigner une bonne adresse ip ! \n");
-    }
-}
-
-void MainWindow::on_TurnRight_released()
-{
-    if (sockServo>=0) {
-        send(sockServo, "1", 1, 0);
-    }
-    else {
-        printf("\n Veuillez renseigner une bonne adresse ip ! \n");
+        fprintf(stderr,"\nInvalid address/ Address not supported \n");
+    } else{
+        connectfd(sockCamera, (SA *)&serv_addrCamera, sizeof(serv_addrCamera));
     }
 }

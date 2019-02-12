@@ -22,21 +22,21 @@ public:
 
 private slots:
 
-    void on_SetIp_released();
-
     void on_Capture_released();
 
     void on_TurnLeft_released();
 
     void on_TurnRight_released();
 
+    void on_SetIp_released();
+
 private:
     Ui::MainWindow *ui;
+    char buffCamera[1024];
     int sockServo;
     struct sockaddr_in serv_addrServo;
     int sockCamera;
     struct sockaddr_in serv_addrCamera;
-    char buffCamera[1024];
 };
 
 #endif // MAINWINDOW_H

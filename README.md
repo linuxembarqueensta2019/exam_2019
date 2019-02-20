@@ -16,7 +16,7 @@ $ sudo docker run -it pblottiere/embsys-rpi3-buildroot-video /bin/bash
 
 ## Flashage de la carte SD
 
-Il faut récupérer l'image de la carte qui est sur le docker sur noter machine.
+Il faut récupérer l'image de la carte qui est sur le docker sur notre machine.
 
 ```
 $ docker cp <container_id>:/root/buildroot-precompiled-2017.08/output/images/sdcard.img .
@@ -79,6 +79,13 @@ $ ./configure CC=/root/buildroot-precompiled-2017.08/output/host/usr/bin/arm-lin
 $ make
 ````
 
+## Servomoteur
 
+Le servomoteur est controllé à l'aide du code python servo.py 
+Pour lancer le code manuellement il suffit de lancer 
+````
+python servo.py
+````
 
-
+Ce code se connecte à la raspberry pi et plus précisement au GPIO 17 ainsi qu'en UDP avec la GUI.
+Dans la boucle principale, on recoit les commandes via la socket et selon la commande reçue on envoie une consigne correspondante aux servomoteur.

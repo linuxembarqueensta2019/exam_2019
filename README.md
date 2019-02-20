@@ -44,4 +44,13 @@ Il faut ajouter dans le fichier `config.txt` de la 1ère partition:
 start_x=1
 gpu_mem=128
 ````
+## Servomoteur
 
+Le servomoteur est controllé à l'aide du code python servo.py 
+Pour lancer le code manuellement il suffit de lancer 
+````
+python servo.py
+````
+
+Ce code se connecte à la raspberry pi et plus précisement au GPIO 17 ainsi qu'en UDP avec la GUI.
+Dans la boucle principale, on recoit les commandes via la socket et selon la commande reçue on envoie une consigne correspondante aux servomoteur.

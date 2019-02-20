@@ -5,6 +5,7 @@ Ce dossier contient
 
 ## Lancement du docker
 
+Pour récupérer l'image déjà précompilée de la carte sd et pour effectuer la cross-compilation, nous utilisons un docker.
 
 ```
 $ sudo docker pull pblottiere/embsys-rpi3-buildroot-video
@@ -15,9 +16,32 @@ $ sudo docker run -it pblottiere/embsys-rpi3-buildroot-video /bin/bash
 
 ## Flashage de la carte SD
 
+Il faut récupérer l'image de la carte qui est sur le docker sur noter machine.
+
 ```
 $ docker cp <container_id>:/root/buildroot-precompiled-2017.08/output/images/sdcard.img .
-$ sudo dd if=sdcard.img of=/dev/sdb
+```
+Puis on flashe la carte en ce plaçant dans le répertoire où est situé l'image sdcard.img. Pour trouver le nom de la carte sd, utiliser la commande ```lsblk```
+
+```
+$ sudo dd if=sdcard.img of=/dev/sdc
 ```
 
-Pour trouver le nom de la carte sd, utiliser la commande ```lsblk```
+Maintenant, il y a normalement 2 partitions sur la carte sd.
+La première partition contient toutes les configurations et les images nécessaire au lancement du système.
+La deuxième partition de 200Mo contient le système de fichier de la rasperry.
+
+Il faut maintenant copier les fichiers ```start_x.elf``` et ```fixup_x.dat``` dans la première partition de la carte sd.
+
+```
+$ sudo docker cp <container_id>:/root/buildroot-precompiled-2017.08/output/images/rpi-firmware/start.elf /media/paul-antoine/sdc/ACOMPLETER
+$ sudo docker cp <container_id>:/root/buildroot-precompiled-2017.08/output/images/rpi-firmware/fixup.data /media/paul-antoine/sdc/ACOMPLETER
+```
+
+Il faut ajouter dans le fichier `config.txt` de la 1ère partition:
+
+````
+start_x=1
+gpu_mem=128
+````
+

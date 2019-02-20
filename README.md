@@ -16,7 +16,7 @@ $ sudo docker run -it pblottiere/embsys-rpi3-buildroot-video /bin/bash
 
 ## Flashage de la carte SD
 
-Il faut récupérer l'image de la carte qui est sur le docker sur noter machine.
+Il faut récupérer l'image de la carte qui est sur le docker sur notre machine.
 
 ```
 $ docker cp <container_id>:/root/buildroot-precompiled-2017.08/output/images/sdcard.img .

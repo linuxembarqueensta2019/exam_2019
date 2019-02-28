@@ -126,16 +126,16 @@ void InstallSIGQUITHandler() {
 
     sa.sa_handler = StopCapture;
     if(sigaction(SIGQUIT, &sa, 0) != 0)
-    fprintf(stderr,"could not install SIGINT handler");
+    fprintf(stderr,"could not install SIGQUIT handler");
 }
 
-void InstallSIGKILLHandler() {
+void InstallSIGTERMHandler() {
     struct sigaction sa;
     CLEAR(sa);
 
     sa.sa_handler = StopCapture;
-    if(sigaction(SIGKILL, &sa, 0) != 0)
-    fprintf(stderr,"could not install SIGINT handler");
+    if(sigaction(SIGTERM, &sa, 0) != 0)
+    fprintf(stderr,"could not install SIGTERM handler");
 }
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -144,7 +144,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     InstallSIGINTHandler();
     InstallSIGQUITHandler();
-    InstallSIGKILLHandler();
+    InstallSIGTERMHandler();
     ui->setupUi(this);
     QPixmap image("../init.png");
     QPixmap pm = image.scaled(image.width()/2, image.height()/2, Qt::KeepAspectRatio);

@@ -40,7 +40,7 @@ Voici les dossier que vous trouverez dans ce Github :
 Pour pouvoir lancer ce magnifique projet, vous devez avoir quelques programmes indispensables :
 
 * ***Docker*** qui va nous permettre de flasher la carte SD et de cross-compiler le code ***v4l2grab*** avant de le mettre sur la raspberry.
-* ***GtkTerm*** qui sera utile pour exécuter le script bash sur la rapsberry depuis l'ordinateur. Utilisez cette commande :
+* ***GtkTerm*** qui sera utile pour exécuter les programmes sur la rapsberry depuis l'ordinateur. Utilisez cette commande :
 ```
 $ sudo apt-get install gtkterm
 ```
@@ -176,13 +176,13 @@ Il reste à lancer les serveurs !
 
 ## Lancement des serveurs
 
-Pour lancer les serveurs, exécutez en premier le serveur du servomoteur avec la commande suivante :
+Pour lancer les serveurs, on peut exécuter le serveur du servomoteur avec la commande suivante :
 ```
 $ python servo.py &
 ```
-Le serveur du servomoteur s'arrête tout seul au bout de 2 minutes de non activation. Pas besoin de s'inquiéter de l'arrêt de ce programme.
 
 Ensuite vous pouvez exécuter le serveur de la caméra en exécutant la commande suivante :
+
 ```
 $ ./v4l2grab -d /dev/video0
 ```

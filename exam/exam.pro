@@ -32,3 +32,8 @@ HEADERS += \
 
 FORMS += \
         mainwindow.ui
+
+unix:!macx: LIBS += -L$$PWD/../../../../../../usr/lib/x86_64-linux-gnu/ -ljpeg
+
+INCLUDEPATH += $$PWD/../../../../../../usr/lib/x86_64-linux-gnu
+DEPENDPATH += $$PWD/../../../../../../usr/lib/x86_64-linux-gnu

@@ -7,6 +7,14 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <unistd.h>
+#include <jpeglib.h>
+#include <signal.h>
+#include <sys/stat.h>
+
+#define IMAGE_SIZE 921600
+#define PORTSERVO 5005
+#define PORTCAM 5006
+#define CLEAR(x) memset (&(x), 0, sizeof (x))
 
 namespace Ui {
 class MainWindow;
@@ -28,15 +36,13 @@ private slots:
 
     void on_TurnRight_released();
 
-    void on_SetIp_released();
+    void on_SetIp_clicked();
 
 private:
     Ui::MainWindow *ui;
-    char buffCamera[1024];
-    int sockServo;
-    struct sockaddr_in serv_addrServo;
-    int sockCamera;
-    struct sockaddr_in serv_addrCamera;
+    unsigned char *buffCamera;
+    char ip [15];
+    char nameImage[40] = "image.jpg";
 };
 
 #endif // MAINWINDOW_H

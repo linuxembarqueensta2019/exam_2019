@@ -143,6 +143,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     InstallSIGINTHandler();
+    InstallSIGQUITHandler();
+    InstallSIGKILLHandler();
     ui->setupUi(this);
     QPixmap image("../init.png");
     QPixmap pm = image.scaled(image.width()/2, image.height()/2, Qt::KeepAspectRatio);
